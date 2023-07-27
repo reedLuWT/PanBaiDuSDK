@@ -3,6 +3,7 @@ package reed.panbaidusdk.api;
 import org.springframework.stereotype.Component;
 import reed.panbaidusdk.annotation.OpenApi;
 
+import java.io.InputStream;
 import java.util.Map;
 
 public interface PanOpenApi {
@@ -21,4 +22,7 @@ public interface PanOpenApi {
 
     @OpenApi("http://pan.baidu.com/rest/2.0/xpan/multimedia")
     String getFileInfo(Map<String,Object> req);
+
+    @OpenApi("")
+    InputStream getFile();
 }

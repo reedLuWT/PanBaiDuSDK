@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reed.panbaidusdk.api.PanOpenApi;
+import reed.panbaidusdk.common.FileUtils;
 
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,14 +83,25 @@ public class PanAuthsController {
     @GetMapping("/getFileInfo")
     public String getFileInfo(){
         Map<String,Object> req = new HashMap<>();
-        String[] str = {"957308924505794"};
+        String[] str = {"810141597253730"};
         req.put("method","filemetas");
         req.put("dlink",1);
         req.put("thumb",1);
         req.put("extra",1);
-        req.put("fsids","[958120764828697]");
+        req.put("fsids","[360076049276025]");
         req.put("access_token",access_token);
         return panOpenApi.getFileInfo(req);
+    }
+
+    @GetMapping("getFile")
+    public String getFile() throws IOException {
+        InputStream input = panOpenApi.getFile();
+        File file1 = new File("./test");
+        long time = new Date().getTime();
+        FileUtils.saveToFile(input,file1);
+        input.close();
+        System.out.println((new Date().getTime()-time)/1000);
+        return null;
     }
 
     public static void main(String[] args) {
@@ -95,20 +109,16 @@ public class PanAuthsController {
             URL url = new URL("");
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
             httpConn.setRequestMethod("GET");
-//            httpConn.setRequestProperty("User-Agent", "pan.baidu.com");
-//            httpConn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-//            httpConn.setRequestProperty("Host", "d.pcs.baidu.com");
-            File file = new File("E:\\test");
-            FileWriter fileWriter = new FileWriter(file);
+            httpConn.setRequestProperty("User-Agent", "pan.baidu.com");
+            httpConn.setRequestProperty("Host", "d.pcs.baidu.com");
             BufferedReader in = new BufferedReader(new InputStreamReader(httpConn.getInputStream()));
             String inputLine;
+            StringBuffer response = new StringBuffer();
             while ((inputLine = in.readLine()) != null) {
-                fileWriter.write(inputLine);
-                System.out.println(inputLine);
+                response.append(inputLine);
             }
             in.close();
-            fileWriter.flush();
-            fileWriter.close();
+            System.out.println(response.toString());
         } catch (Exception e) {
             System.out.println(e);
         }

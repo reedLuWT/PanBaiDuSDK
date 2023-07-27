@@ -3,6 +3,7 @@ package reed.panbaidusdk.api.impl;
 import org.springframework.stereotype.Component;
 import reed.panbaidusdk.api.PanOpenApi;
 
+import java.io.InputStream;
 import java.util.Map;
 
 @Component
@@ -31,6 +32,11 @@ public class PanOpenApiImpl implements PanOpenApi {
 
     @Override
     public String getFileInfo(Map<String, Object> req) {
+        return null;
+    }
+
+    @Override
+    public InputStream getFile() {
         return null;
     }
 }

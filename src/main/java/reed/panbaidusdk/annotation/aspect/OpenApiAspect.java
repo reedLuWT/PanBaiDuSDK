@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import reed.panbaidusdk.annotation.OpenApi;
 import reed.panbaidusdk.common.OKHttp3Utils3;
 
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.Type;
@@ -71,8 +72,8 @@ public class OpenApiAspect {
     private Object handleResult(Method method, ResponseBody responseBody) throws Exception {
         Type genericReturnType = method.getGenericReturnType();
         Class<?> returnType = method.getReturnType();
-        if(returnType == byte[].class){
-            return responseBody.bytes();
+        if(returnType == InputStream.class){
+            return responseBody.byteStream();
         }
         String string = responseBody.string();
         log.info("response body {}",string);
