@@ -22,8 +22,8 @@ public final class OKHttp3Utils3 {
 
     private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder()
             .connectionPool(new ConnectionPool(50, 5, TimeUnit.MINUTES))
-            .connectTimeout(0, TimeUnit.SECONDS).readTimeout(0, TimeUnit.SECONDS).writeTimeout(0, TimeUnit.SECONDS)
-            .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 7890))).build();
+            .connectTimeout(0, TimeUnit.SECONDS).readTimeout(0, TimeUnit.SECONDS).writeTimeout(0, TimeUnit.SECONDS).build();
+//            .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 7890))).build();
 
 
     /**
@@ -46,7 +46,8 @@ public final class OKHttp3Utils3 {
     }
 
     private static OkHttpClient setProxy(OkHttpClient okHttpClient) {
-        return okHttpClient.newBuilder().proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 7890))).build();
+        return okHttpClient;
+//        return okHttpClient.newBuilder().proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 7890))).build();
     }
 
     private static synchronized OkHttpClient syncCreateClient(int timeout) {
